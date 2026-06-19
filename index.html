@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SSTS | فضاء شبوة لحلول التكنولوجيا</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            dark: '#06101e',       /* الكحلي الداكن */
+                            deep: '#082545',       /* أزرق عميق */
+                            cyan: '#00b4d8',       /* الفيروزي المضيء */
+                            teal: '#10caa0',       /* الأخضر التقني */
+                            lightBg: '#f8fafc',    /* خلفية الفاتح */
+                            cardBg: 'rgba(8, 37, 69, 0.4)'
+                        }
+                    },
+                    fontFamily: {
+                        cairo: ['Cairo', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts: Cairo & Poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Poppins:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: #06101e;
+            color: #f4f7f6;
+        }
+        /* تأثيرات الإضاءة الخلفية للشبكات المتقدمة */
+        .tech-glow-1 {
+            background: radial-gradient(circle at 50% 50%, rgba(0, 180, 216, 0.15) 0%, transparent 60%);
+        }
+        .tech-glow-2 {
+            background: radial-gradient(circle at 10% 30%, rgba(16, 202, 160, 0.1) 0%, transparent 50%);
+        }
+        /* كسر حواف الصور الفنية */
+        .clip-tech-shape {
+            clip-path: polygon(0% 15%, 15% 0%, 100% 0%, 100% 85%, 85% 100%, 0% 100%);
+        }
+    </style>
+</head>
+<body class="overflow-x-hidden antialiased">
+
+    <!-- طبقات التوهج التقني الخلفية -->
+    <div class="absolute top-0 right-0 w-full h-[800px] tech-glow-1 pointer-events-none z-0"></div>
+    <div class="absolute top-[1200px] left-0 w-full h-[800px] tech-glow-2 pointer-events-none z-0"></div>
+
+    <!-- 1. بار التنقل (Navbar) -->
+    <header class="sticky top-0 z-50 backdrop-blur-md bg-brand-dark/80 border-b border-brand-cyan/15 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- الشعار المأخوذ من الملف المرسل 820b2e30-41e9-4d6b-b8ff-1ebe1a3a7be7.png -->
+                <div class="flex-shrink-0 flex items-center">
+                    <a href="#" class="flex items-center gap-3">
+                        <img src="img/001.png" alt="SSTS Logo" class="h-16 w-auto object-contain">
+                    </a>
+                </div>
+                
+                <!-- روابط التصفح السريع -->
+                <nav class="hidden md:flex space-x-reverse space-x-8">
+                    <a href="#" class="text-white hover:text-brand-cyan font-semibold transition-colors duration-200">الرئيسية</a>
+                    <a href="#about" class="text-gray-300 hover:text-brand-cyan transition-colors duration-200">من نحن</a>
+                    <a href="#services" class="text-gray-300 hover:text-brand-cyan transition-colors duration-200">خدماتنا</a>
+                    <a href="#estimator" class="text-gray-300 hover:text-brand-cyan transition-colors duration-200">حاسبة الباقات</a>
+                    <a href="#contact" class="text-gray-300 hover:text-brand-cyan transition-colors duration-200">تواصل معنا</a>
+                </nav>
+
+                <!-- زر الإجراء والاتصال السريع -->
+                <div class="hidden lg:flex items-center gap-4">
+                    <a href="tel:+967778045604" class="text-brand-cyan font-bold flex items-center gap-2 hover:underline">
+                        <i class="fa-solid fa-phone"></i>
+                        <span dir="ltr">+967 778045604</span>
+                    </a>
+                    <a href="#contact" class="bg-gradient-to-l from-brand-cyan to-[#0077b6] hover:brightness-110 text-brand-dark font-extrabold px-6 py-2.5 rounded-lg transition-all duration-300 shadow-[0_0_15px_rgba(0,180,216,0.3)]">
+                        طلب استشارة مجانية
+                    </a>
+                </div>
+
+                <!-- زر قائمة الهواتف الذكية -->
+                <div class="flex md:hidden">
+                    <button id="mobile-menu-btn" type="button" class="text-gray-400 hover:text-white focus:outline-none" aria-label="Toggle Menu">
+                        <i class="fa-solid fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- قائمة الهواتف المحمولة التفاعلية -->
+        <div id="mobile-menu" class="hidden md:hidden bg-brand-dark/95 border-b border-brand-cyan/20 px-4 pt-2 pb-6 space-y-3">
+            <a href="#" class="block text-white hover:text-brand-cyan font-bold py-2">الرئيسية</a>
+            <a href="#about" class="block text-gray-300 hover:text-brand-cyan py-2">من نحن</a>
+            <a href="#services" class="block text-gray-300 hover:text-brand-cyan py-2">خدماتنا</a>
+            <a href="#estimator" class="block text-gray-300 hover:text-brand-cyan py-2">حاسبة الباقات</a>
+            <a href="#contact" class="block text-gray-300 hover:text-brand-cyan py-2">تواصل معنا</a>
+            <div class="pt-4 border-t border-gray-800 flex flex-col gap-3">
+                <a href="tel:+967778045604" class="text-brand-cyan font-bold flex items-center gap-2 py-2">
+                    <i class="fa-solid fa-phone"></i>
+                    <span dir="ltr">+967 778045604</span>
+                </a>
+                <a href="#contact" class="text-center bg-brand-cyan text-brand-dark font-bold py-3 rounded-lg">طلب استشارة مجانية</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- 2. القسم الرئيسي واجهة الهوية البصرية (Hero Section) -->
+    <section class="relative min-h-[calc(100vh-80px)] flex items-center py-12 lg:py-20 z-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                
+                <!-- النصوص الرئيسية -->
+                <div class="lg:col-span-7 space-y-6 text-center lg:text-right">
+                    <div class="inline-flex items-center gap-2 bg-brand-deep/60 border border-brand-cyan/30 px-4 py-2 rounded-full text-brand-cyan text-sm font-semibold mb-4">
+                        <i class="fa-solid fa-shield-halved"></i>
+                        <span>شريكك التقني الموثوق والمستدام</span>
+                    </div>
+                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-tight text-white">
+                        حلول تقنية متكاملة<br>
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-cyan to-brand-teal">لأداء أفضل.. ومستقبل ذكي</span>
+                    </h1>
+                    <p class="text-lg text-gray-300 max-w-2xl mx-auto lg:mx-0">
+                        مؤسسة <strong class="text-brand-cyan">فضاء شبوة لحلول التكنولوجيا (SSTS)</strong> تبتكر وتصمم أحدث البنى التحتية، الشبكات السلكية واللاسلكية، الأنظمة الأمنية الذكية، وصيانة أجهزة الحاسب لتسريع ودعم نمو أعمالكم بآمن وثقة.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start pt-4">
+                        <a href="#services" class="bg-gradient-to-l from-brand-cyan to-[#0077b6] text-brand-dark font-black px-8 py-4 rounded-xl shadow-[0_0_20px_rgba(0,180,216,0.4)] hover:shadow-[0_0_30px_rgba(0,180,216,0.6)] hover:scale-[1.02] transition-all duration-300 text-center">
+                            اكتشف خدماتنا التقنية
+                        </a>
+                        <a href="#contact" class="border border-brand-cyan/40 hover:border-brand-cyan hover:bg-brand-cyan/10 text-white font-semibold px-8 py-4 rounded-xl transition-all duration-300 text-center">
+                            تحدث مع أحد المهندسين
+                        </a>
+                    </div>
+                </div>
+
+                <!-- الهوية البصرية من خلال الملف المرسل المدمج file_00000000bdd871f5b1708b55fde89773.png -->
+                <div class="lg:col-span-5 relative">
+                    <div class="relative mx-auto max-w-[480px] lg:max-w-none">
+                        <!-- تلميحات هندسية وتأثير توهج خلفي -->
+                        <div class="absolute -inset-1.5 bg-gradient-to-r from-brand-cyan to-brand-teal rounded-2xl blur opacity-30"></div>
+                        <div class="relative bg-brand-deep border border-brand-cyan/20 p-3 rounded-2xl overflow-hidden shadow-2xl">
+                            <!-- تضمين الملصق التعريفي الرائع والهوية البصرية -->
+                            <img src="img/002.png" alt="SSTS Complete Technology Solutions" class="w-full h-auto rounded-xl shadow-inner object-cover">
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. قسم رسالة الهوية والقيم والمبادئ الأساسية (Identity & Values) -->
+    <section id="about" class="py-20 bg-brand-deep/20 border-y border-brand-cyan/10 relative z-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-white">من نحن ورؤيتنا الرقمية</h2>
+                <div class="h-1.5 w-24 bg-brand-cyan mx-auto mt-4 rounded-full"></div>
+                <p class="text-gray-300 mt-6 text-lg">
+                    فضاء شبوة لحلول التكنولوجيا (SSTS) هي منشأة يمنية رائدة ومستقلة، تسعى لتمكين الشركات والمؤسسات الحكومية والخاصة من التحول الرقمي الكامل بأفضل الممارسات والمعايير العالمية للاتصال والحماية والصيانة المستمرة.
+                </p>
+            </div>
+
+            <!-- عرض المبادئ الثلاثة الكبرى في الهوية بكرتات تفاعلية -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                
+                <!-- القيمة الأولى -->
+                <div class="bg-brand-deep/40 border border-brand-cyan/10 p-8 rounded-2xl hover:border-brand-cyan/40 hover:scale-[1.03] transition-all duration-300 group">
+                    <div class="w-14 h-14 bg-brand-cyan/10 rounded-xl flex items-center justify-center text-brand-cyan text-2xl mb-6 group-hover:bg-brand-cyan group-hover:text-brand-dark transition-all duration-300">
+                        <i class="fa-solid fa-lightbulb"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">الابتكار التكنولوجي</h3>
+                    <p class="text-gray-400">
+                        نسعى دوماً للبحث وتوريد أحدث المعدات البرمجية والأمنية لمواكبة التطورات العالمية وتقديم حلول ذكية وعملية لعملائنا في شبوة وخارجها.
+                    </p>
+                </div>
+
+                <!-- القيمة الثانية -->
+                <div class="bg-brand-deep/40 border border-brand-cyan/10 p-8 rounded-2xl hover:border-brand-cyan/40 hover:scale-[1.03] transition-all duration-300 group">
+                    <div class="w-14 h-14 bg-brand-cyan/10 rounded-xl flex items-center justify-center text-brand-cyan text-2xl mb-6 group-hover:bg-brand-cyan group-hover:text-brand-dark transition-all duration-300">
+                        <i class="fa-solid fa-shield-halved"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">الموثوقية والأمان</h3>
+                    <p class="text-gray-400">
+                        تصاميم بنى تحتية شبكية وحلول مراقبة تحمي بياناتك وأصولك طوال اليوم لضمان مستويات متقدمة وخالية من الثغرات الأمنية والتشغيلية.
+                    </p>
+                </div>
+
+                <!-- القيمة الثالثة -->
+                <div class="bg-brand-deep/40 border border-brand-cyan/10 p-8 rounded-2xl hover:border-brand-cyan/40 hover:scale-[1.03] transition-all duration-300 group">
+                    <div class="w-14 h-14 bg-brand-cyan/10 rounded-xl flex items-center justify-center text-brand-cyan text-2xl mb-6 group-hover:bg-brand-cyan group-hover:text-brand-dark transition-all duration-300">
+                        <i class="fa-solid fa-screwdriver-wrench"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">الدعم والمتابعة الدائمة</h3>
+                    <p class="text-gray-400">
+                        خدمات ما بعد البيع والتركيب الفنية لدينا تتم من خلال عقود صيانة دورية مرنة وجدول زمني محدد لتقليل فترات الأعطال البرمجية والعتادية.
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. قسم خدماتنا الاحترافية الثلاث (Our Core Services) -->
+    <section id="services" class="py-20 relative z-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-brand-cyan uppercase tracking-wider font-extrabold text-sm">مجالات ومحاور العمل</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-white mt-2">الحلول والخدمات الرئيسية الثلاثة</h2>
+                <div class="h-1.5 w-24 bg-brand-cyan mx-auto mt-4 rounded-full"></div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                
+                <!-- الخدمة الأولى (الصيانة والدعم الفني) -->
+                <div class="bg-brand-dark border border-brand-cyan/15 rounded-3xl overflow-hidden hover:border-brand-cyan/40 transition-all duration-300 shadow-xl flex flex-col justify-between">
+                    <div class="p-8">
+                        <div class="flex items-center justify-between mb-6">
+                            <span class="text-5xl font-black text-brand-cyan/20 font-mono">01</span>
+                            <div class="w-12 h-12 bg-brand-cyan/10 rounded-full flex items-center justify-center text-brand-cyan text-xl">
+                                <i class="fa-solid fa-gears"></i>
+                            </div>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white mb-4">الصيانة والدعم الفني</h3>
+                        <p class="text-gray-400 mb-6 leading-relaxed">
+                            صيانة عتادية وبرمجية متكاملة لبيئات العمل، مع تنظيف وتطهير الأجهزة وتحديث الأنظمة الأمنية وإدارة الخوادم لتجربة عمل أكثر استقراراً.
+                        </p>
+                        <ul class="space-y-3 text-gray-300 text-sm">
+                            <li class="flex items-center gap-2">
+                                <i class="fa-solid fa-circle-check text-brand-teal"></i>
+                                <span>صيانة وقائية دورية للخوادم والشبكات</span>
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <i class="fa-solid fa-circle-check text-brand-teal"></i>
+                                <span>حلول النسخ الاحتياطي التلقائي للبيانات</span>
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <i class="fa-solid fa-circle-check text-brand-teal"></i>
+                                <span>تدخل سريع لحل مشكلات البرمجيات والعتاد</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="p-8 pt-0">
+                        <a href="#contact" class="block text-center w-full bg-brand-deep hover:bg-brand-cyan hover:text-brand-dark text-white font-bold py-3 px-4 rounded-xl transition-all duration-300">
+                            اطلب الخدمة الآن
+                        </a>
+                    </div>
+                </div>
+
+                <!-- الخدمة الثانية (تركيب كاميرات المراقبة) -->
+                <div class="bg-brand-dark border border-brand-cyan/15 rounded-3xl overflow-hidden hover:border-brand-cyan/40 transition-all duration-300 shadow-xl flex flex-col justify-between">
+                    <div class="p-8">
+                        <div class="flex items-center justify-between mb-6">
+                            <span class="text-5xl font-black text-brand-cyan/20 font-mono">02</span>
+                            <div class="w-12 h-12 bg-brand-cyan/10 rounded-full flex items-center justify-center text-brand-cyan text-xl">
+                                <i class="fa-solid fa-video"></i>
+                            </div>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white mb-4">تركيب كاميرات المراقبة</h3>
+                        <p class="text-gray-400 mb-6 leading-relaxed">
+                            توفير وتصميم أنظمة الحماية والمراقبة التلفزيونية الحديثة مع ربطها بالأجهزة الذكية للمتابعة المستمرة والحية من أي بقعة في العالم.
+                        </p>
+                        <ul class="space-y-3 text-gray-300 text-sm">
+                            <li class="flex items-center gap-2">
+                                <i class="fa-solid fa-circle-check text-brand-teal"></i>
+                                <span>كاميرات عالية الدقة (IP & Analog)</span>
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <i class="fa-solid fa-circle-check text-brand-teal"></i>
+                                <span>ربط ومراقبة حية عبر تطبيق الجوال والإنترنت</span>
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <i class="fa-solid fa-circle-check text-brand-teal"></i>
+                                <span>صيانة وتحديث دوري لأجهزة التسجيل (NVR/DVR)</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="p-8 pt-0">
+                        <a href="#contact" class="block text-center w-full bg-brand-deep hover:bg-brand-cyan hover:text-brand-dark text-white font-bold py-3 px-4 rounded-xl transition-all duration-300">
+                            اطلب الخدمة الآن
+                        </a>
+                    </div>
+                </div>
+
+                <!-- الخدمة الثالثة (خدمات الكمبيوتر) -->
+                <div class="bg-brand-dark border border-brand-cyan/15 rounded-3xl overflow-hidden hover:border-brand-cyan/40 transition-all duration-300 shadow-xl flex flex-col justify-between">
+                    <div class="p-8">
+                        <div class="flex items-center justify-between mb-6">
+                            <span class="text-5xl font-black text-brand-cyan/20 font-mono">03</span>
+                            <div class="w-12 h-12 bg-brand-cyan/10 rounded-full flex items-center justify-center text-brand-cyan text-xl">
+                                <i class="fa-solid fa-laptop"></i>
+                            </div>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white mb-4">خدمات الكمبيوتر والشبكات</h3>
+                        <p class="text-gray-400 mb-6 leading-relaxed">
+                            تخطيط وتمديد وتجهيز الشبكات السلكية والمقويات اللاسلكية وتوريد خوادم وأجهزة الحواسيب المكتبية والمحمولة المخصصة للشركات والمنشآت.
+                        </p>
+                        <ul class="space-y-3 text-gray-300 text-sm">
+                            <li class="flex items-center gap-2">
+                                <i class="fa-solid fa-circle-check text-brand-teal"></i>
+                                <span>تخطيط وتمديد البنية التحتية للشبكات المتقدمة</span>
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <i class="fa-solid fa-circle-check text-brand-teal"></i>
+                                <span>توريد وإعداد الخوادم والأجهزة ذات الكفاءة العالية</span>
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <i class="fa-solid fa-circle-check text-brand-teal"></i>
+                                <span>حلول تقوية وتوسعة تغطية الـ Wi-Fi للمنشآت الكبيرة</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="p-8 pt-0">
+                        <a href="#contact" class="block text-center w-full bg-brand-deep hover:bg-brand-cyan hover:text-brand-dark text-white font-bold py-3 px-4 rounded-xl transition-all duration-300">
+                            اطلب الخدمة الآن
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. حاسبة الباقات التفاعلية لتخصيص الخدمة الذكية (Interactive Plan Estimator) -->
+    <section id="estimator" class="py-20 bg-brand-deep/30 border-y border-brand-cyan/10 relative z-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                
+                <!-- معلومات وتفاصيل على اليمين -->
+                <div class="lg:col-span-5 space-y-6">
+                    <span class="text-brand-cyan uppercase font-extrabold text-sm tracking-wider">احصل على تقدير فوري</span>
+                    <h2 class="text-3xl sm:text-4xl font-extrabold text-white leading-tight">خصص باقتك التقنية التفاعلية بنفسك</h2>
+                    <p class="text-gray-300 text-lg">
+                        قم باختيار الخدمات والمقاييس المطلوبة لمنشأتك، وسيقوم النظام الذكي بتقدير وتحديد حجم الباقة الأنسب لمتطلبات عملكم وتوجيه الطلب للمهندسين فوراً.
+                    </p>
+                    <div class="space-y-4">
+                        <div class="flex items-start gap-3">
+                            <div class="w-6 h-6 bg-brand-cyan/20 rounded-full flex items-center justify-center text-brand-cyan text-sm mt-1">
+                                <i class="fa-solid fa-check"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-white font-bold">باقات تشغيلية مرنة ومخصصة</h4>
+                                <p class="text-gray-400 text-sm">حدد فقط ما تحتاج إليه لمنشأتك دون أي تكاليف إضافية غير مستغلة.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <div class="w-6 h-6 bg-brand-cyan/20 rounded-full flex items-center justify-center text-brand-cyan text-sm mt-1">
+                                <i class="fa-solid fa-check"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-white font-bold">عروض أسعار معتمدة ومدروسة</h4>
+                                <p class="text-gray-400 text-sm">عروض تنافسية تراعي ميزانيات الشركات المحلية ودقة الأداء المطلوب.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- الحاسبة التفاعلية الفعالة على اليسار -->
+                <div class="lg:col-span-7">
+                    <div class="bg-brand-dark/90 border border-brand-cyan/20 rounded-3xl p-6 sm:p-10 shadow-2xl space-y-8">
+                        <h3 class="text-2xl font-bold text-white border-b border-brand-cyan/15 pb-4">
+                            مخطط الاحتياجات الفنية
+                        </h3>
+                        
+                        <!-- الخيارات -->
+                        <div class="space-y-6">
+                            
+                            <!-- اختيار الخدمة الأولى -->
+                            <div>
+                                <label class="block text-sm font-bold text-brand-cyan mb-3">حجم الأجهزة والحواسب بالمنشأة:</label>
+                                <div class="grid grid-cols-3 gap-3">
+                                    <button type="button" onclick="selectComputers('small', this)" class="computer-btn bg-brand-deep/50 border border-brand-cyan/20 hover:border-brand-cyan px-4 py-3 rounded-xl text-sm font-semibold transition-all duration-200 focus:outline-none text-center">
+                                        1 - 5 أجهزة
+                                    </button>
+                                    <button type="button" onclick="selectComputers('medium', this)" class="computer-btn bg-brand-deep/50 border border-brand-cyan/20 hover:border-brand-cyan px-4 py-3 rounded-xl text-sm font-semibold transition-all duration-200 focus:outline-none text-center">
+                                        6 - 15 جهازاً
+                                    </button>
+                                    <button type="button" onclick="selectComputers('large', this)" class="computer-btn bg-brand-deep/50 border border-brand-cyan/20 hover:border-brand-cyan px-4 py-3 rounded-xl text-sm font-semibold transition-all duration-200 focus:outline-none text-center">
+                                        أكثر من 15 جهازاً
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- اختيار كاميرات المراقبة -->
+                            <div>
+                                <label class="block text-sm font-bold text-brand-cyan mb-3">كاميرات المراقبة المطلوبة:</label>
+                                <div class="grid grid-cols-3 gap-3">
+                                    <button type="button" onclick="selectCameras('no-camera', this)" class="camera-btn bg-brand-deep/50 border border-brand-cyan/20 hover:border-brand-cyan px-4 py-3 rounded-xl text-sm font-semibold transition-all duration-200 focus:outline-none text-center">
+                                        لا أحتاج حالياً
+                                    </button>
+                                    <button type="button" onclick="selectCameras('small-cam', this)" class="camera-btn bg-brand-deep/50 border border-brand-cyan/20 hover:border-brand-cyan px-4 py-3 rounded-xl text-sm font-semibold transition-all duration-200 focus:outline-none text-center">
+                                        1 - 4 كاميرات
+                                    </button>
+                                    <button type="button" onclick="selectCameras('large-cam', this)" class="camera-btn bg-brand-deep/50 border border-brand-cyan/20 hover:border-brand-cyan px-4 py-3 rounded-xl text-sm font-semibold transition-all duration-200 focus:outline-none text-center">
+                                        أكثر من 4 كاميرات
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- البنية التحتية والشبكة -->
+                            <div>
+                                <label class="block text-sm font-bold text-brand-cyan mb-3">هل تحتاج إلى تمديد وإعداد شبكات جديدة؟</label>
+                                <div class="grid grid-cols-2 gap-3">
+                                    <button type="button" onclick="selectNetwork('yes-net', this)" class="network-btn bg-brand-deep/50 border border-brand-cyan/20 hover:border-brand-cyan px-4 py-3 rounded-xl text-sm font-semibold transition-all duration-200 focus:outline-none text-center">
+                                        نعم، تمديد وتجهيز كامل
+                                    </button>
+                                    <button type="button" onclick="selectNetwork('no-net', this)" class="network-btn bg-brand-deep/50 border border-brand-cyan/20 hover:border-brand-cyan px-4 py-3 rounded-xl text-sm font-semibold transition-all duration-200 focus:outline-none text-center">
+                                        لا، الشبكة جاهزة حالياً
+                                    </button>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!-- التوصية التلقائية للباقة الناتجة -->
+                        <div id="result-box" class="bg-brand-deep/70 border border-brand-teal/30 p-5 rounded-2xl flex flex-col sm:flex-row items-center justify-between gap-4">
+                            <div>
+                                <span class="text-xs text-brand-teal uppercase font-bold tracking-wider">الباقة المقترحة لمتطلباتك</span>
+                                <h4 id="recommended-plan" class="text-xl font-black text-white mt-1">يرجى تحديد الخيارات أعلاه</h4>
+                                <p id="plan-desc" class="text-gray-400 text-xs mt-1">أداة تفاعلية لخدمة أفضل وسرعة استجابة للمؤسسات.</p>
+                            </div>
+                            <button type="button" onclick="submitEstimatedPlan()" class="bg-brand-teal text-brand-dark font-black px-6 py-3 rounded-xl hover:brightness-110 transition-all duration-200 shadow-lg text-sm w-full sm:w-auto">
+                                اطلب تسعيرة الباقة
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. قسم الأسئلة الشائعة (FAQ) -->
+    <section class="py-20 relative z-10">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <span class="text-brand-cyan uppercase tracking-wider font-extrabold text-sm">الدعم والمعرفة</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-white mt-2">أسئلة شائعة حول خدماتنا التقنية</h2>
+                <div class="h-1.5 w-24 bg-brand-cyan mx-auto mt-4 rounded-full"></div>
+            </div>
+
+            <!-- قائمة منسدلة تفاعلية (Accordion FAQ) -->
+            <div class="space-y-4">
+                
+                <!-- السؤال الأول -->
+                <div class="bg-brand-deep/30 border border-brand-cyan/15 rounded-2xl overflow-hidden transition-all duration-300">
+                    <button type="button" onclick="toggleAccordion('faq-1')" class="w-full flex items-center justify-between p-6 text-right focus:outline-none">
+                        <span class="text-lg font-bold text-white">ما هي آلية ومواعيد الاستجابة لطلبات الصيانة الطارئة؟</span>
+                        <i class="fa-solid fa-chevron-down text-brand-cyan transition-transform duration-300" id="faq-1-icon"></i>
+                    </button>
+                    <div id="faq-1" class="hidden px-6 pb-6 text-gray-300 leading-relaxed border-t border-brand-cyan/5 pt-4 text-sm">
+                        لدينا خط دعم وتواصل سريع ومباشر على مدار الساعة لجميع المشتركين ب باقات صيانة الشركات المتكاملة، حيث يتم الرد الفوري والوصول إلى الموقع في أقصر فترة زمنية ممكنة لضمان عودة واستقرار أعمالكم بدون خسائر.
+                    </div>
+                </div>
+
+                <!-- السؤال الثاني -->
+                <div class="bg-brand-deep/30 border border-brand-cyan/15 rounded-2xl overflow-hidden transition-all duration-300">
+                    <button type="button" onclick="toggleAccordion('faq-2')" class="w-full flex items-center justify-between p-6 text-right focus:outline-none">
+                        <span class="text-lg font-bold text-white">هل تقومون بتوريد أجهزة الكمبيوتر والمعدات التقنية بأنفسكم؟</span>
+                        <i class="fa-solid fa-chevron-down text-brand-cyan transition-transform duration-300" id="faq-2-icon"></i>
+                    </button>
+                    <div id="faq-2" class="hidden px-6 pb-6 text-gray-300 leading-relaxed border-t border-brand-cyan/5 pt-4 text-sm">
+                        نعم، نحن في SSTS نوفر أفضل الحواسيب المكتبية والمحمولة والخوادم والملحقات والراوترات بكافة الإضافات والمواصفات التي تتطابق مع حاجة المنشأة وبأسعار تفضيلية وحصرية تشمل الكفالة والتركيب.
+                    </div>
+                </div>
+
+                <!-- السؤال الثالث -->
+                <div class="bg-brand-deep/30 border border-brand-cyan/15 rounded-2xl overflow-hidden transition-all duration-300">
+                    <button type="button" onclick="toggleAccordion('faq-3')" class="w-full flex items-center justify-between p-6 text-right focus:outline-none">
+                        <span class="text-lg font-bold text-white">هل تدعم أنظمة كاميرات المراقبة لديكم الربط بأكثر من جوال؟</span>
+                        <i class="fa-solid fa-chevron-down text-brand-cyan transition-transform duration-300" id="faq-3-icon"></i>
+                    </button>
+                    <div id="faq-3" class="hidden px-6 pb-6 text-gray-300 leading-relaxed border-t border-brand-cyan/5 pt-4 text-sm">
+                        بالتأكيد. جميع أنظمة الكاميرات الذكية التي نقوم بتركيبها مهيأة لدعم التوصيل والربط المتعدد على شاشات المراقبة المباشرة وأكثر من جوال مع إعطاء صلاحيات وامتيازات مختلفة للمسؤولين عن المراقبة.
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- 7. قسم تواصل معنا ونموذج الاستشارة (Contact & Form) -->
+    <section id="contact" class="py-20 bg-brand-deep/20 border-t border-brand-cyan/10 relative z-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-stretch">
+                
+                <!-- تفاصيل التواصل والبيانات البصرية الثابتة -->
+                <div class="lg:col-span-5 space-y-8 flex flex-col justify-between">
+                    <div class="space-y-6">
+                        <span class="text-brand-cyan uppercase tracking-wider font-extrabold text-sm">تواصل معنا اليوم</span>
+                        <h2 class="text-3xl sm:text-4xl font-extrabold text-white">دعنا نبدأ في تأمين وتجهيز منشأتك</h2>
+                        <p class="text-gray-300">
+                            فريق SSTS التقني مستعد للرد على كافة الاستفسارات، تصميم وتخطيط البنية التحتية، وتوفير الدعم الفني اللازم.
+                        </p>
+                    </div>
+
+                    <!-- الصناديق المتناسقة مع تفاصيل الشعار السفلى -->
+                    <div class="space-y-4">
+                        
+                        <!-- الهاتف -->
+                        <div class="flex items-center gap-4 bg-brand-dark border border-brand-cyan/15 p-4 rounded-xl">
+                            <div class="w-12 h-12 bg-brand-cyan/10 rounded-full flex items-center justify-center text-brand-cyan text-lg">
+                                <i class="fa-solid fa-phone"></i>
+                            </div>
+                            <div>
+                                <span class="text-gray-400 text-xs block">رقم الاتصال والواتساب</span>
+                                <a href="tel:+967778045604" class="text-white font-bold text-lg hover:text-brand-cyan transition-colors" dir="ltr">+967 778045604</a>
+                            </div>
+                        </div>
+
+                        <!-- البريد الإلكتروني -->
+                        <div class="flex items-center gap-4 bg-brand-dark border border-brand-cyan/15 p-4 rounded-xl">
+                            <div class="w-12 h-12 bg-brand-cyan/10 rounded-full flex items-center justify-center text-brand-cyan text-lg">
+                                <i class="fa-solid fa-envelope"></i>
+                            </div>
+                            <div>
+                                <span class="text-gray-400 text-xs block">البريد الإلكتروني الرسمي</span>
+                                <a href="mailto:info@shabwaspace.com" class="text-white font-bold text-lg hover:text-brand-cyan transition-colors">info@shabwaspace.com</a>
+                            </div>
+                        </div>
+
+                        <!-- الموقع والمقر -->
+                        <div class="flex items-center gap-4 bg-brand-dark border border-brand-cyan/15 p-4 rounded-xl">
+                            <div class="w-12 h-12 bg-brand-cyan/10 rounded-full flex items-center justify-center text-brand-cyan text-lg">
+                                <i class="fa-solid fa-location-dot"></i>
+                            </div>
+                            <div>
+                                <span class="text-gray-400 text-xs block">المقر والموقع الرئيسي</span>
+                                <span class="text-white font-bold text-lg">الجمهورية اليمنية - محافظة شبوة</span>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- أيقونات مواقع التواصل الاجتماعي -->
+                    <div class="flex gap-4">
+                        <a href="#" class="w-10 h-10 bg-brand-deep border border-brand-cyan/20 hover:border-brand-cyan/60 rounded-full flex items-center justify-center text-white hover:text-brand-cyan transition-all"><i class="fa-brands fa-facebook-f"></i></a>
+                        <a href="#" class="w-10 h-10 bg-brand-deep border border-brand-cyan/20 hover:border-brand-cyan/60 rounded-full flex items-center justify-center text-white hover:text-brand-cyan transition-all"><i class="fa-brands fa-x-twitter"></i></a>
+                        <a href="#" class="w-10 h-10 bg-brand-deep border border-brand-cyan/20 hover:border-brand-cyan/60 rounded-full flex items-center justify-center text-white hover:text-brand-cyan transition-all"><i class="fa-brands fa-linkedin-in"></i></a>
+                        <a href="https://wa.me/967778045604" class="w-10 h-10 bg-brand-deep border border-brand-cyan/20 hover:border-brand-cyan/60 rounded-full flex items-center justify-center text-white hover:text-brand-cyan transition-all"><i class="fa-brands fa-whatsapp"></i></a>
+                    </div>
+                </div>
+
+                <!-- نموذج الإرسال والتواصل الفوري على اليسار -->
+                <div class="lg:col-span-7">
+                    <form id="contact-form" onsubmit="handleContactSubmit(event)" class="bg-brand-dark/80 border border-brand-cyan/15 rounded-3xl p-6 sm:p-10 shadow-xl space-y-6">
+                        <h3 class="text-2xl font-bold text-white mb-4">أرسل لنا طلبك مباشرة</h3>
+                        
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-300 mb-2">اسم المنشأة / الاسم الشخصي</label>
+                                <input type="text" id="form-name" required class="w-full bg-brand-deep/40 border border-brand-cyan/20 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-brand-cyan text-sm" placeholder="أدخل الاسم">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-300 mb-2">رقم الهاتف للتواصل</label>
+                                <input type="tel" id="form-phone" required class="w-full bg-brand-deep/40 border border-brand-cyan/20 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-brand-cyan text-sm" placeholder="+967">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-300 mb-2">نوع الخدمة المطلوبة</label>
+                            <select id="form-service" class="w-full bg-brand-deep/40 border border-brand-cyan/20 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-brand-cyan text-sm">
+                                <option value="maintenance" class="bg-brand-dark text-white">الصيانة والدعم الفني</option>
+                                <option value="cameras" class="bg-brand-dark text-white">تركيب أنظمة كاميرات المراقبة</option>
+                                <option value="networks" class="bg-brand-dark text-white">تجهيز الشبكات وأجهزة الكمبيوتر</option>
+                                <option value="consultancy" class="bg-brand-dark text-white">طلب استشارة فنية شاملة</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-300 mb-2">تفاصيل إضافية حول طلبك</label>
+                            <textarea id="form-message" rows="4" class="w-full bg-brand-deep/40 border border-brand-cyan/20 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-brand-cyan text-sm" placeholder="اكتب بعض التفاصيل لمساعدتنا على فهم متطلباتك بشكل أفضل"></textarea>
+                        </div>
+
+                        <button type="submit" class="w-full bg-gradient-to-l from-brand-cyan to-[#0077b6] text-brand-dark font-black py-4 rounded-xl shadow-lg hover:brightness-110 transition-all duration-300">
+                            أرسل طلب الاستشارة والتقدير
+                        </button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- 8. تذييل الصفحة الأنيق (Footer) -->
+    <footer class="bg-brand-dark border-t border-brand-cyan/15 py-12 relative z-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-6 border-b border-brand-cyan/10 pb-8">
+                <!-- الشعار المأخوذ من الملف 820b2e30-41e9-4d6b-b8ff-1ebe1a3a7be7.png -->
+                <div class="flex items-center gap-3">
+                    <img src="img/001.png" alt="SSTS Footer Logo" class="h-16 w-auto object-contain">
+                </div>
+                <div class="text-sm text-gray-400 text-center md:text-right">
+                    جميع الحقوق محفوظة لمؤسسة <strong class="text-brand-cyan">فضاء شبوة لحلول التكنولوجيا (SSTS)</strong> &copy; 2026.
+                </div>
+            </div>
+            
+            <div class="flex flex-col sm:flex-row items-center justify-between gap-4 pt-8 text-xs text-gray-500">
+                <div class="flex gap-4">
+                    <a href="#" class="hover:text-brand-cyan transition-all">الشروط والأحكام</a>
+                    <a href="#" class="hover:text-brand-cyan transition-all">سياسة الخصوصية</a>
+                    <a href="#" class="hover:text-brand-cyan transition-all">مستند الهوية الفنية</a>
+                </div>
+                <div>
+                    تصميم الصفحة لـ SSTS - محافظة شبوة.
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- زر واتساب العائم والمباشر للتواصل السريع للغاية مع العملاء -->
+    <a href="https://wa.me/967778045604" target="_blank" class="fixed bottom-6 right-6 z-50 bg-[#25d366] text-white w-14 h-14 rounded-full flex items-center justify-center text-3xl shadow-2xl hover:scale-110 transition-all" aria-label="WhatsApp Contact">
+        <i class="fa-brands fa-whatsapp"></i>
+    </a>
+
+    <!-- أكواد جافاسكريبت والمنطق التفاعلي للحاسبة وقائمة الهواتف -->
+    <script>
+        // 1. إدارة قائمة الهواتف المحمولة
+        const menuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // 2. التحكم في أسئلة FAQ المنزلقة
+        function toggleAccordion(id) {
+            const el = document.getElementById(id);
+            const icon = document.getElementById(id + '-icon');
+            el.classList.toggle('hidden');
+            if (el.classList.contains('hidden')) {
+                icon.style.transform = 'rotate(0deg)';
+            } else {
+                icon.style.transform = 'rotate(180deg)';
+            }
+        }
+
+        // 3. المنطق التفاعلي الخاص بحاسبة باقات SSTS
+        let currentSelection = {
+            computers: null,
+            cameras: null,
+            network: null
+        };
+
+        function selectComputers(size, btn) {
+            currentSelection.computers = size;
+            document.querySelectorAll('.computer-btn').forEach(b => {
+                b.classList.remove('bg-brand-cyan', 'text-brand-dark', 'border-brand-cyan');
+                b.classList.add('bg-brand-deep/50', 'border-brand-cyan/20');
+            });
+            btn.classList.add('bg-brand-cyan', 'text-brand-dark', 'border-brand-cyan');
+            updatePlanRecommendation();
+        }
+
+        function selectCameras(size, btn) {
+            currentSelection.cameras = size;
+            document.querySelectorAll('.camera-btn').forEach(b => {
+                b.classList.remove('bg-brand-cyan', 'text-brand-dark', 'border-brand-cyan');
+                b.classList.add('bg-brand-deep/50', 'border-brand-cyan/20');
+            });
+            btn.classList.add('bg-brand-cyan', 'text-brand-dark', 'border-brand-cyan');
+            updatePlanRecommendation();
+        }
+
+        function selectNetwork(option, btn) {
+            currentSelection.network = option;
+            document.querySelectorAll('.network-btn').forEach(b => {
+                b.classList.remove('bg-brand-cyan', 'text-brand-dark', 'border-brand-cyan');
+                b.classList.add('bg-brand-deep/50', 'border-brand-cyan/20');
+            });
+            btn.classList.add('bg-brand-cyan', 'text-brand-dark', 'border-brand-cyan');
+            updatePlanRecommendation();
+        }
+
+        function updatePlanRecommendation() {
+            const planText = document.getElementById('recommended-plan');
+            const planDesc = document.getElementById('plan-desc');
+            const resultBox = document.getElementById('result-box');
+
+            if (!currentSelection.computers || !currentSelection.cameras || !currentSelection.network) {
+                planText.innerText = "يرجى تحديد الخيارات أعلاه";
+                planDesc.innerText = "أداة تفاعلية لخدمة أفضل وسرعة استجابة للمؤسسات.";
+                return;
+            }
+
+            // فحص الحالة لاقتراح الباقة المناسبة
+            if (currentSelection.computers === 'large' || currentSelection.network === 'yes-net' || currentSelection.cameras === 'large-cam') {
+                planText.innerText = "الباقة المتكاملة (للشركات والمنشآت)";
+                planDesc.innerText = "باقة شاملة توفر صيانة مخصصة، تركيب شبكات متطورة، ودعم على مدار الساعة.";
+                resultBox.classList.remove('border-brand-teal/30');
+                resultBox.classList.add('border-brand-cyan/60');
+            } else if (currentSelection.computers === 'medium' || currentSelection.cameras === 'small-cam') {
+                planText.innerText = "الباقة المتقدمة (للمكاتب والمؤسسات الناشئة)";
+                planDesc.innerText = "تغطية ممتازة للدعم الفني الأسبوعي وإدارة الأنظمة وحماية كاميرات المراقبة.";
+                resultBox.classList.remove('border-brand-cyan/60');
+                resultBox.classList.add('border-brand-teal/30');
+            } else {
+                planText.innerText = "الباقة الأساسية (الأفراد والمحلات التجارية)";
+                planDesc.innerText = "باقة اقتصادية تقدم صيانة شهرية ودعماً فورياً للحواسب والأجهزة المنفردة.";
+                resultBox.classList.remove('border-brand-cyan/60');
+                resultBox.classList.add('border-brand-teal/30');
+            }
+        }
+
+        function submitEstimatedPlan() {
+            if (!currentSelection.computers || !currentSelection.cameras || !currentSelection.network) {
+                alert("يرجى تحديد كافة الخيارات أولاً لمساعدتنا على اقتراح الباقة.");
+                return;
+            }
+            const plan = document.getElementById('recommended-plan').innerText;
+            
+            // نقل البيانات تلقائياً وتوجيه المستخدم للنموذج بالأسفل
+            document.getElementById('form-message').value = `أرغب في الحصول على استشارة وعرض سعر بخصوص: ${plan}. (المتطلبات المحددة: الحواسب [${currentSelection.computers}]، كاميرات المراقبة [${currentSelection.cameras}]، تجهيز الشبكات [${currentSelection.network}]).`;
+            
+            // تحديد الحقل تلقائياً
+            if (currentSelection.network === 'yes-net') {
+                document.getElementById('form-service').value = 'networks';
+            } else if (currentSelection.cameras === 'small-cam' || currentSelection.cameras === 'large-cam') {
+                document.getElementById('form-service').value = 'cameras';
+            } else {
+                document.getElementById('form-service').value = 'maintenance';
+            }
+
+            window.location.hash = '#contact';
+            document.getElementById('form-name').focus();
+        }
+
+        // 4. معالجة الإرسال ومحاكاة نجاح التقديم للعميل
+        function handleContactSubmit(event) {
+            event.preventDefault();
+            const name = document.getElementById('form-name').value;
+            const phone = document.getElementById('form-phone').value;
+            const service = document.getElementById('form-service').value;
+            
+            alert(`شكراً لك يا ${name}. لقد تم استلام طلبك وبينات اتصالك (${phone}) بخصوص خدمات SSTS. سيقوم أحد مهندسي فضاء شبوة بالاتصال بك خلال الساعات القليلة القادمة.`);
+            document.getElementById('contact-form').reset();
+        }
+    </script>
+</body>
+</html>
